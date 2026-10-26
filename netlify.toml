@@ -1,0 +1,14 @@
+[[redirects]]
+  from = "/"
+  to = "/OxiDrop"
+  status = 200
+
+[[headers]]
+  for = "/"
+  [headers.values]
+    Content-Type = "text/html; charset=UTF-8"
+
+[[headers]]
+  for = "/OxiDrop"
+  [headers.values]
+    Content-Type = "text/html; charset=UTF-8"
