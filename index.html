@@ -98,10 +98,51 @@ box-shadow:inset 0 0 0 3px #5c3420,inset 0 0 0 4px rgba(0,0,0,.5),inset 0 0 14px
 .tab{border:1px solid transparent;border-radius:9999px;color:rgba(255,255,255,.6);font-family:'Russo One',Arial,sans-serif;font-size:12px;line-height:1.15;padding-left:2px;padding-right:2px}
 .tab[aria-selected=true]{background:linear-gradient(rgba(255,70,70,.5),rgba(150,10,25,.55));color:#fff;border-color:rgba(255,255,255,.3);box-shadow:inset 1px 1px 1px rgba(255,255,255,.4),0 0 16px rgba(255,40,50,.45)}
 #nav{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.5fr) minmax(0,1fr);position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom,0px));max-width:424px;margin:0 auto;z-index:20;padding:6px;background:linear-gradient(rgba(255,255,255,.1),rgba(255,255,255,.03)),rgba(15,5,8,.6)}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ===== v3: дизайн, 18+, апгрейдер ===== */
+.grid-cols-6{grid-template-columns:repeat(6,minmax(0,1fr))}
+.seg{display:flex;flex-wrap:wrap;gap:4px;padding:5px;margin-bottom:12px}
+.sg{flex:1 1 calc(33.333% - 4px)}
+#cv,#pc,#uc{position:relative;z-index:1;width:100%;height:auto;display:block}
+.glass::after{content:"";position:absolute;left:14%;right:14%;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);pointer-events:none}
+.tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding-top:8px;padding-bottom:8px}
+.ni{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tab[aria-selected=true] .ni{filter:drop-shadow(0 0 6px rgba(255,90,80,.9))}
+.ybtn,.gbtn,.sg,.tab,.tile,.cell{transition:transform .12s ease,box-shadow .2s ease,filter .2s ease}
+.ybtn:active,.gbtn:active,.sg:active{transform:scale(.97)}
+.bal b,.st b{font-variant-numeric:tabular-nums}
+.b1{animation:drift1 20s ease-in-out infinite;will-change:transform}.b2{animation:drift2 26s ease-in-out infinite;will-change:transform}
+@keyframes drift1{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(46px,38px,0)}}
+@keyframes drift2{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(-52px,-30px,0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.panel{animation:fadeUp .3s ease-out}
+@keyframes pop{0%{transform:scale(.75);opacity:0}60%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+.msg.pop{animation:pop .45s ease-out}
+@keyframes fUp{0%{color:#6dffa3;text-shadow:0 0 14px #3dff8a;transform:scale(1.12)}100%{transform:none}}
+@keyframes fDn{0%{color:#ff7a8a;text-shadow:0 0 14px #ff2d2d;transform:scale(.92)}100%{transform:none}}
+.fUp{animation:fUp .9s ease-out}.fDn{animation:fDn .9s ease-out}
+.avatar{width:48px;height:48px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font:400 20px 'Russo One',Arial,sans-serif;background:linear-gradient(#ff5a4d,#a50f1c);border:1px solid rgba(255,255,255,.35);box-shadow:inset 1px 1px 0 rgba(255,255,255,.5),0 0 18px rgba(255,40,50,.45)}
+.row-btn{display:flex;align-items:center;gap:12px;font-weight:600}.ri{font-size:20px;width:26px;text-align:center}.chev{margin-left:auto;opacity:.5;font-size:22px;line-height:1}
+#age{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(70% 50% at 50% 30%,rgba(255,40,50,.4),#050507 72%)}
+.agebox{max-width:380px;width:100%}
+.age-badge{width:84px;height:84px;margin:0 auto 14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:400 30px 'Russo One',Arial,sans-serif;border:3px solid #ff2d2d;color:#fff;box-shadow:0 0 24px rgba(255,45,45,.6),inset 0 0 14px rgba(255,45,45,.4)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body data-api="">
+<div id="age" role="dialog" aria-modal="true" aria-labelledby="ageQ">
+  <div id="ageAsk" class="glass g1 p-5 text-center agebox">
+    <div class="age-badge">18+</div>
+    <h2 id="ageQ" class="ttl" style="border:0;padding:0;font-size:22px" data-i18n="age_q"></h2>
+    <p class="sub mt-2 text-sm leading-relaxed" data-i18n="age_t"></p>
+    <div class="grid grid-cols-2 gap-3 mt-5"><button id="ageYes" class="ybtn py-3" data-i18n="age_yes"></button><button id="ageNo" class="gbtn py-3" data-i18n="age_no"></button></div>
+  </div>
+  <div id="ageStop" class="glass g1 p-5 text-center agebox hidden">
+    <div class="age-badge">18+</div>
+    <p class="font-semibold text-lg leading-relaxed" data-i18n="age_sorry"></p>
+    <button id="ageClose" class="gbtn w-full py-3 mt-5" data-i18n="age_close"></button>
+  </div>
+</div>
 <div class="blob b1"></div><div class="blob b2"></div>
 <div class="wrap">
 <header class="glass g1 hdr">
@@ -115,13 +156,21 @@ box-shadow:inset 0 0 0 3px #5c3420,inset 0 0 0 4px rgba(0,0,0,.5),inset 0 0 14px
 <main>
 <section id="tab-game" class="panel">
   <div class="seg glass g2">
-    <button class="sg" data-gm="cases" data-i18n="g_cases"></button><button class="sg" data-gm="wheel" data-i18n="g_wheel"></button><button class="sg" data-gm="plinko" data-i18n="g_plinko"></button><button class="sg" data-gm="mines" data-i18n="g_mines"></button>
+    <button class="sg" data-gm="cases" data-i18n="g_cases"></button><button class="sg" data-gm="upgrader" data-i18n="g_upgrader"></button><button class="sg" data-gm="wheel" data-i18n="g_wheel"></button><button class="sg" data-gm="plinko" data-i18n="g_plinko"></button><button class="sg" data-gm="mines" data-i18n="g_mines"></button>
   </div>
 
   <div data-g="cases" class="glass g1 p-4 mb-3 hidden">
     <div class="row"><h2 class="ttl" data-i18n="g_cases"></h2></div>
     <div id="caseGrid" class="grid grid-cols-2 gap-3 mt-3"></div>
     <div id="caseEmpty" class="plate mt-3 p-5 text-center"><div class="text-5xl">📦</div><p class="mt-2 font-semibold" data-i18n="cases_soon"></p><p class="sub text-sm mt-1" data-i18n="cases_note"></p></div>
+  </div>
+
+  <div data-g="upgrader" class="glass g1 p-4 mb-3 hidden">
+    <div class="row"><h2 class="ttl" data-i18n="g_upgrader"></h2><span class="chip tag sub">OXIDE</span></div>
+    <div class="plate mt-3"><canvas id="uc" width="480" height="420"></canvas></div>
+    <div class="sub text-xs mt-3 mb-1" data-i18n="mult"></div>
+    <div id="upMults" class="grid grid-cols-6 gap-2"></div>
+    <button id="upGo" class="ybtn w-full py-3 text-lg mt-3" data-i18n="up_go"></button>
   </div>
 
   <div data-g="wheel" class="glass g1 p-4 mb-3">
@@ -158,7 +207,7 @@ box-shadow:inset 0 0 0 3px #5c3420,inset 0 0 0 4px rgba(0,0,0,.5),inset 0 0 14px
 
   <p id="msg" class="msg" aria-live="polite"></p>
 
-  <div class="glass g2 p-4 mb-3" data-gx="wheel,plinko,mines">
+  <div class="glass g2 p-4 mb-3" data-gx="wheel,upgrader,plinko,mines">
     <div class="sub mb-2" data-i18n="bet"></div>
     <div class="flex items-center gap-2">
       <button id="dec" class="gbtn w-14 h-12 text-xl flex-none">−</button>
@@ -198,7 +247,7 @@ box-shadow:inset 0 0 0 3px #5c3420,inset 0 0 0 4px rgba(0,0,0,.5),inset 0 0 14px
 
 <section id="tab-profile" class="panel hidden">
   <div class="glass g1 p-4 mb-3">
-    <div class="text-xl font-bold" id="uname"></div><div class="sub text-sm" id="uid"></div>
+    <div class="flex items-center gap-3"><div class="avatar" id="avatar"></div><div><div class="text-xl font-bold" id="uname"></div><div class="sub text-sm" id="uid"></div></div></div>
     <div class="flex gap-2 mt-4"><button class="gbtn flex-1 py-2 lg" data-l="ru">RU</button><button class="gbtn flex-1 py-2 lg" data-l="en">EN</button></div>
   </div>
   <div class="glass g2 p-4 mb-3">
@@ -206,6 +255,10 @@ box-shadow:inset 0 0 0 3px #5c3420,inset 0 0 0 4px rgba(0,0,0,.5),inset 0 0 14px
     <div class="flex gap-2"><input id="code" autocomplete="off" aria-label="Код купона" autocapitalize="characters" maxlength="32"><button id="apply" class="ybtn px-5 flex-none" data-i18n="apply"></button></div>
     <p id="cmsg" class="text-sm mt-2 min-h-[1.25rem]" aria-live="polite"></p>
     <p class="text-xs sub mt-1" data-i18n="coupon_rules"></p>
+  </div>
+  <div class="glass g2 p-2 mb-3">
+    <button id="rowBonus" class="row-btn w-full text-left p-3 border-b border-white/10"><span class="ri">🎁</span><span data-i18n="bonuses"></span><span class="chev">›</span></button>
+    <button id="rowCoop" class="row-btn w-full text-left p-3"><span class="ri">🤝</span><span data-i18n="coop"></span><span class="chev">›</span></button>
   </div>
   <div class="glass g1 p-2">
     <button class="doc w-full text-left p-3 border-b border-white/10" data-doc="terms" data-i18n="d_terms"></button>
@@ -218,10 +271,10 @@ box-shadow:inset 0 0 0 3px #5c3420,inset 0 0 0 4px rgba(0,0,0,.5),inset 0 0 14px
 </div>
 
 <nav id="nav" class="glass grid grid-cols-4 gap-1 text-sm" role="tablist">
-  <button class="tab py-3" role="tab" data-tab="game" data-i18n="tab_game"></button>
-  <button class="tab py-3" role="tab" data-tab="bets" data-i18n="tab_bets"></button>
-  <button class="tab py-3" role="tab" data-tab="cash" data-i18n="tab_cash"></button>
-  <button class="tab py-3" role="tab" data-tab="profile" data-i18n="tab_prof"></button>
+  <button class="tab" role="tab" data-tab="game"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 11h4M8 9v4M15 12h.01M18 10h.01"/><path d="M17.3 5H6.7a4 4 0 0 0-3.9 3.1l-1 4.6A3 3 0 0 0 4.7 16c.8 0 1.5-.4 2-1l1.3-1.7h8l1.3 1.7c.5.6 1.2 1 2 1a3 3 0 0 0 2.9-3.3l-1-4.6A4 4 0 0 0 17.3 5z"/></svg><span data-i18n="tab_game"></span></button>
+  <button class="tab" role="tab" data-tab="bets"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="tab_bets"></span></button>
+  <button class="tab" role="tab" data-tab="cash"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h13v4"/><path d="M3 7v11a2 2 0 0 0 2 2h15V9H5a2 2 0 0 1-2-2z"/><path d="M16 14h.01"/></svg><span data-i18n="tab_cash"></span></button>
+  <button class="tab" role="tab" data-tab="profile"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg><span data-i18n="tab_prof"></span></button>
 </nav>
 
 <div id="modal" class="fixed inset-0 z-50 hidden items-end sm:items-center justify-center bg-black/70" role="dialog" aria-modal="true" aria-labelledby="mTitle">
@@ -284,8 +337,8 @@ security:["# Security Policy","When paying by bank card, payment processing (inc
 bugs:BUGS.en}};
 
 
-const T={ru:{g_cases:'Кейсы',cases_soon:'Кейсы скоро появятся',cases_note:'Здесь будет список кейсов с призами.',amount_ph:'Своя сумма',bad_amount:'Введите сумму от 1 до 100000.',e_auth:'Сессия истекла. Закройте и откройте приложение заново.',e_rate:'Слишком часто. Подождите немного.',e_net:'Нет связи с сервером. Попробуйте ещё раз.',e_active:'Состояние игры изменилось. Обновите экран.',srv_pay:'Пополнение и вывод подключаются администратором. По вопросам пишите @oxidedrop_1.',g_wheel:'Колесо',g_plinko:'Плинко',g_mines:'Сапёр',risk:'Риск',risk_l:'Низкий',risk_m:'Средний',risk_h:'Высокий',drop:'Бросить шар',minesn:'Количество мин',start:'Начать игру',cash:'Забрать',mult:'Множитель',next:'Далее',boom:'Мина! Ставка проиграна.',tab_game:'Игра',tab_bets:'История',tab_cash:'Депозит/\u200Bвывод',tab_prof:'Профиль',bank:'Банк',players:'Игроков',hist:'История',bet:'Ставка',colors:'Выбор цвета',clear:'Снять ставки',starts:'НАЧАЛО ЧЕРЕЗ',going:'ИДЁТ ИГРА',dropped:'ВЫПАЛО',bal:'Баланс',topup:'Пополнить',wd:'Вывод',how:'Как это работает',sbp:'Пополнение — СБП',wd_h:'Вывод по HH-ID',wd_t:'Фиксированные суммы: 50, 125, 250, 500, 1250, 2500. Вывод обрабатывается до 24 часов. Если в течение этого времени средства не поступили — обратитесь в поддержку.',nobets:'Ставок пока нет.',round:'Раунд',coupon:'Активация купона',apply:'Активировать',coupon_rules:'Для общих купонов установлен минимальный депозит, для персональных требований нет.',d_terms:'Условия использования',d_privacy:'Политика конфиденциальности и защита данных',d_security:'Политика безопасности',d_bugs:'Сообщения о багах и уязвимостях',write:'Написать в Telegram',close:'Закрыть',cancel:'Отмена',confirm:'Подтвердить',nofunds:'Недостаточно Скрапа.',closed:'Приём ставок закрыт.',win:'Выигрыш',loss:'Проигрыш',topup_t:'Пополнение через СБП',topup_n:'Демо-режим: реальная оплата не подключена. Все покупки окончательны, средства не возвращаются.',wd_t2:'Вывод по HH-ID',wd_id:'Ваш HH-ID',wd_ok:'Заявка принята. Срок обработки — до 24 часов.',wd_need:'Укажите HH-ID.',guest:'Гость',c_ok:'Купон активирован. Начислено:',c_bad:'Купон не найден.',c_used:'Купон уже использован.',c_min:'Для общего купона нужен депозит от',c_empty:'Введите код купона.'},
-en:{g_cases:'Cases',cases_soon:'Cases are coming soon',cases_note:'The list of cases with prizes will appear here.',amount_ph:'Custom amount',bad_amount:'Enter an amount from 1 to 100000.',e_auth:'Session expired. Close and reopen the app.',e_rate:'Too many requests. Please wait.',e_net:'No connection to the server. Try again.',e_active:'Game state changed. Refresh the screen.',srv_pay:'Top-ups and withdrawals are handled by the administrator. Questions: @oxidedrop_1.',g_wheel:'Wheel',g_plinko:'Plinko',g_mines:'Mines',risk:'Risk',risk_l:'Low',risk_m:'Medium',risk_h:'High',drop:'Drop ball',minesn:'Number of mines',start:'Start game',cash:'Cash out',mult:'Multiplier',next:'Next',boom:'Mine! Bet lost.',tab_game:'Game',tab_bets:'History',tab_cash:'Deposit/\u200Bwithdraw',tab_prof:'Profile',bank:'Pot',players:'Players',hist:'History',bet:'Bet',colors:'Choose color',clear:'Clear bets',starts:'STARTS IN',going:'IN PLAY',dropped:'RESULT',bal:'Balance',topup:'Top up',wd:'Withdraw',how:'How it works',sbp:'Top-up — SBP',wd_h:'Withdrawal by HH-ID',wd_t:'Fixed amounts: 50, 125, 250, 500, 1250, 2500. Withdrawals are processed within 24 hours. If funds have not arrived by then, contact support.',nobets:'No bets yet.',round:'Round',coupon:'Coupon activation',apply:'Activate',coupon_rules:'General coupons have a minimum deposit; personal coupons have none.',d_terms:'Terms of Use',d_privacy:'Privacy Policy and Data Protection',d_security:'Security Policy',d_bugs:'Bug and vulnerability reports',write:'Write on Telegram',close:'Close',cancel:'Cancel',confirm:'Confirm',nofunds:'Insufficient Scrap.',closed:'Betting is closed.',win:'Win',loss:'Loss',topup_t:'Top-up via SBP',topup_n:'Demo mode: real payment is not connected. All purchases are final and non-refundable.',wd_t2:'Withdraw by HH-ID',wd_id:'Your HH-ID',wd_ok:'Request accepted. Processing takes up to 24 hours.',wd_need:'Enter your HH-ID.',guest:'Guest',c_ok:'Coupon activated. Credited:',c_bad:'Coupon not found.',c_used:'Coupon already used.',c_min:'A general coupon requires a deposit of at least',c_empty:'Enter a coupon code.'}};
+const T={ru:{g_upgrader:'Апгрейдер',up_go:'Апгрейд',up_chance:'ШАНС',bonuses:'Бонусы',coop:'Сотрудничество',bonus_t:'Здесь будут бонусы и акции OxiDrop: промокоды, бонусы за депозит и награды для рефералов. Активировать промокод можно прямо в профиле.',bonus_btn:'К купонам',coop_t:'Хотите стать нашим рефералом? Напишите нашему Telegram-менеджеру, если:',coop_c1:'у вас больше 1000 подписчиков',coop_c2:'вы активно ведёте свои социальные сети',coop_c3:'у вас контент по Oxide',coop_m:'Менеджер: @oxidedrop_1',coop_btn:'Написать менеджеру',age_q:'Вам есть 18 лет?',age_t:'Доступ к игре разрешён только совершеннолетним.',age_yes:'Да, мне есть 18',age_no:'Нет',age_sorry:'Извините, но несовершеннолетним играть в эту игру нельзя.',age_close:'Закрыть',wd_amt:'Сумма вывода',wd_range:'Введите сумму от {a} до {b}.',g_cases:'Кейсы',cases_soon:'Кейсы скоро появятся',cases_note:'Здесь будет список кейсов с призами.',amount_ph:'Своя сумма',bad_amount:'Введите сумму от 1 до 100000.',e_auth:'Сессия истекла. Закройте и откройте приложение заново.',e_rate:'Слишком часто. Подождите немного.',e_net:'Нет связи с сервером. Попробуйте ещё раз.',e_active:'Состояние игры изменилось. Обновите экран.',srv_pay:'Пополнение и вывод подключаются администратором. По вопросам пишите @oxidedrop_1.',g_wheel:'Колесо',g_plinko:'Плинко',g_mines:'Сапёр',risk:'Риск',risk_l:'Низкий',risk_m:'Средний',risk_h:'Высокий',drop:'Бросить шар',minesn:'Количество мин',start:'Начать игру',cash:'Забрать',mult:'Множитель',next:'Далее',boom:'Мина! Ставка проиграна.',tab_game:'Игра',tab_bets:'История',tab_cash:'Депозит/\u200Bвывод',tab_prof:'Профиль',bank:'Банк',players:'Игроков',hist:'История',bet:'Ставка',colors:'Выбор цвета',clear:'Снять ставки',starts:'НАЧАЛО ЧЕРЕЗ',going:'ИДЁТ ИГРА',dropped:'ВЫПАЛО',bal:'Баланс',topup:'Пополнить',wd:'Вывод',how:'Как это работает',sbp:'Пополнение — СБП',wd_h:'Вывод по HH-ID',wd_t:'Укажите сумму и HH-ID. Вывод обрабатывается до 24 часов. Если в течение этого времени средства не поступили — обратитесь в поддержку.',nobets:'Ставок пока нет.',round:'Раунд',coupon:'Активация купона',apply:'Активировать',coupon_rules:'Для общих купонов установлен минимальный депозит, для персональных требований нет.',d_terms:'Условия использования',d_privacy:'Политика конфиденциальности и защита данных',d_security:'Политика безопасности',d_bugs:'Сообщения о багах и уязвимостях',write:'Написать в Telegram',close:'Закрыть',cancel:'Отмена',confirm:'Подтвердить',nofunds:'Недостаточно Скрапа.',closed:'Приём ставок закрыт.',win:'Выигрыш',loss:'Проигрыш',topup_t:'Пополнение через СБП',topup_n:'Демо-режим: реальная оплата не подключена. Все покупки окончательны, средства не возвращаются.',wd_t2:'Вывод по HH-ID',wd_id:'Ваш HH-ID',wd_ok:'Заявка принята. Срок обработки — до 24 часов.',wd_need:'Укажите HH-ID.',guest:'Гость',c_ok:'Купон активирован. Начислено:',c_bad:'Купон не найден.',c_used:'Купон уже использован.',c_min:'Для общего купона нужен депозит от',c_empty:'Введите код купона.'},
+en:{g_upgrader:'Upgrader',up_go:'Upgrade',up_chance:'CHANCE',bonuses:'Bonuses',coop:'Cooperation',bonus_t:'OxiDrop bonuses and promotions will appear here: promo codes, deposit bonuses and referral rewards. You can activate a promo code right in your profile.',bonus_btn:'To coupons',coop_t:'Want to become our referral partner? Write to our Telegram manager if:',coop_c1:'you have more than 1000 followers',coop_c2:'you actively run your social media',coop_c3:'your content is about Oxide',coop_m:'Manager: @oxidedrop_1',coop_btn:'Write to the manager',age_q:'Are you 18 or older?',age_t:'Access to the game is for adults only.',age_yes:"Yes, I'm 18+",age_no:'No',age_sorry:'Sorry, but minors cannot play this game.',age_close:'Close',wd_amt:'Withdrawal amount',wd_range:'Enter an amount from {a} to {b}.',g_cases:'Cases',cases_soon:'Cases are coming soon',cases_note:'The list of cases with prizes will appear here.',amount_ph:'Custom amount',bad_amount:'Enter an amount from 1 to 100000.',e_auth:'Session expired. Close and reopen the app.',e_rate:'Too many requests. Please wait.',e_net:'No connection to the server. Try again.',e_active:'Game state changed. Refresh the screen.',srv_pay:'Top-ups and withdrawals are handled by the administrator. Questions: @oxidedrop_1.',g_wheel:'Wheel',g_plinko:'Plinko',g_mines:'Mines',risk:'Risk',risk_l:'Low',risk_m:'Medium',risk_h:'High',drop:'Drop ball',minesn:'Number of mines',start:'Start game',cash:'Cash out',mult:'Multiplier',next:'Next',boom:'Mine! Bet lost.',tab_game:'Game',tab_bets:'History',tab_cash:'Deposit/\u200Bwithdraw',tab_prof:'Profile',bank:'Pot',players:'Players',hist:'History',bet:'Bet',colors:'Choose color',clear:'Clear bets',starts:'STARTS IN',going:'IN PLAY',dropped:'RESULT',bal:'Balance',topup:'Top up',wd:'Withdraw',how:'How it works',sbp:'Top-up — SBP',wd_h:'Withdrawal by HH-ID',wd_t:'Enter an amount and your HH-ID. Withdrawals are processed within 24 hours. If funds have not arrived by then, contact support.',nobets:'No bets yet.',round:'Round',coupon:'Coupon activation',apply:'Activate',coupon_rules:'General coupons have a minimum deposit; personal coupons have none.',d_terms:'Terms of Use',d_privacy:'Privacy Policy and Data Protection',d_security:'Security Policy',d_bugs:'Bug and vulnerability reports',write:'Write on Telegram',close:'Close',cancel:'Cancel',confirm:'Confirm',nofunds:'Insufficient Scrap.',closed:'Betting is closed.',win:'Win',loss:'Loss',topup_t:'Top-up via SBP',topup_n:'Demo mode: real payment is not connected. All purchases are final and non-refundable.',wd_t2:'Withdraw by HH-ID',wd_id:'Your HH-ID',wd_ok:'Request accepted. Processing takes up to 24 hours.',wd_need:'Enter your HH-ID.',guest:'Guest',c_ok:'Coupon activated. Credited:',c_bad:'Coupon not found.',c_used:'Coupon already used.',c_min:'A general coupon requires a deposit of at least',c_empty:'Enter a coupon code.'}};
 let lang='ru',sound=true;
 const st={bal:200,dep:0,hist:[],res:[],pres:[],used:{},pend:{}};
 const r2=n=>Math.round(n*100)/100,fmt=n=>r2(n).toFixed(2),t=k=>T[lang][k];
@@ -293,7 +346,7 @@ const num=(v,d)=>typeof v==='number'&&isFinite(v)&&v>=0&&v<1e9?v:d;
 let refund=0;
 try{const s=JSON.parse(localStorage.getItem('oxi2')||'null');if(s&&typeof s==='object'){const o=s.st&&typeof s.st==='object'?s.st:{};
   st.bal=num(o.bal,200);st.dep=num(o.dep,0);
-  st.hist=Array.isArray(o.hist)?o.hist.slice(0,40).filter(x=>x&&typeof x==='object').map(x=>({k:['wheel','plinko','mines'].includes(x.k)?x.k:'wheel',r:num(x.r,0),c:[1,3,5,10,20].includes(x.c)?x.c:1,bet:num(x.bet,0),win:num(x.win,0),x:num(x.x,0)})):[];
+  st.hist=Array.isArray(o.hist)?o.hist.slice(0,40).filter(x=>x&&typeof x==='object').map(x=>({k:['wheel','plinko','mines','upgrader'].includes(x.k)?x.k:'wheel',r:num(x.r,0),c:[1,3,5,10,20].includes(x.c)?x.c:1,bet:num(x.bet,0),win:num(x.win,0),x:num(x.x,0)})):[];
   st.res=Array.isArray(o.res)?o.res.filter(c=>[1,3,5,10,20].includes(c)).slice(0,12):[];
   st.pres=Array.isArray(o.pres)?o.pres.filter(m=>typeof m==='number'&&isFinite(m)).slice(0,10):[];
   if(o.used&&typeof o.used==='object')Object.keys(o.used).forEach(k=>{if(/^[A-Z0-9_-]{1,32}$/.test(k))st.used[k]=1});
@@ -307,11 +360,13 @@ const GEAR='<svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#d98
 $$('.gear').forEach(g=>{g.innerHTML=GEAR;g.style.cssText='display:inline-block;width:'+(g.classList.contains('big')?'44px':'24px')+';height:'+(g.classList.contains('big')?'44px':'24px')});
 
 /* sound */
-let ac;function beep(f=440,d=.06,ty='sine'){if(!sound)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.type=ty;o.frequency.value=f;g.gain.setValueAtTime(.07,ac.currentTime);g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+d);o.connect(g).connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}}
+let ac;function beep(f=440,d=.06,ty='sine',at=0,vol=.07){if(!sound)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const t0=ac.currentTime+at,o=ac.createOscillator(),g=ac.createGain();o.type=ty;o.frequency.value=f;g.gain.setValueAtTime(vol,t0);g.gain.exponentialRampToValueAtTime(.0001,t0+d);o.connect(g).connect(ac.destination);o.start(t0);o.stop(t0+d)}catch(e){}}
+const sfxWin=()=>{[523,659,784,1047,1319].forEach((f,i)=>beep(f,.2,'triangle',i*.08,.09))};
+const sfxLoss=()=>{[392,330,262,196].forEach((f,i)=>beep(f,.24,'sawtooth',i*.11,.05))};
 const hap=k=>{try{tg&&tg.HapticFeedback.impactOccurred(k||'light')}catch(e){}};
 
 /* modal */
-let curTab='game';let lastFocus=null;
+let curTab='game';let lastBal;let lastFocus=null;
 function modal(title,nodes,btns){$('#mTitle').textContent=title;$('#mBody').replaceChildren(...nodes);const f=$('#mFoot');f.replaceChildren();
   (btns||[]).forEach(b=>{const e=document.createElement('button');e.className=(b.primary?'ybtn':'gbtn')+' px-5 py-2';e.textContent=b.text;e.onclick=()=>{if(b.fn&&b.fn()===false)return;closeM()};f.append(e)});
   const m=$('#modal');lastFocus=document.activeElement;m.classList.remove('hidden');m.classList.add('flex');document.body.style.overflow='hidden';$('#mClose').focus()}
@@ -361,9 +416,9 @@ const face=makeFace(),over=makeOver(),cv=$('#cv'),cx=cv.getContext('2d');
 let phase='bet',tEnd=Date.now()+20000,round=1,bets={1:0,3:0,5:0,10:0,20:0},theta=0,spin=null,last=null,lastIdx=-1;
 st.pend=bets;
 const total=()=>r2(Object.values(bets).reduce((a,b)=>a+b,0));
-function msg(s,c){const m=$('#msg');m.textContent=s||'';m.style.color=c||'#fff'}
+function msg(s,c){const m=$('#msg');m.textContent=s||'';m.style.color=c||'#fff';m.classList.remove('pop');if(s){void m.offsetWidth;m.classList.add('pop')}}
 function render(){
-  $('#bal').textContent=$('#bal2').textContent=(SRV&&!ready)?'…':fmt(st.bal);$('#bank').textContent=fmt(total());$('#players').textContent=total()>0?1:0;
+  $('#bal').textContent=$('#bal2').textContent=(SRV&&!ready)?'…':fmt(st.bal);if(ready&&lastBal!==undefined&&st.bal!==lastBal){const el=$('#bal');el.classList.remove('fUp','fDn');void el.offsetWidth;el.classList.add(st.bal>lastBal?'fUp':'fDn')}if(ready)lastBal=st.bal;$('#bank').textContent=fmt(total());$('#players').textContent=total()>0?1:0;
   $$('#tiles .tile i').forEach(i=>{const v=bets[i.parentNode.dataset.c];i.textContent=v?(v%1?fmt(v):v):'';i.style.display=v?'block':'none'});
   const h=$('#hist');h.replaceChildren();st.res.slice(0,12).forEach(c=>{const e=document.createElement('span');e.className='hchip';e.textContent=c;e.style.background=COL[c];h.append(e)});
   $('#sndBtn').textContent=sound?'🔊':'🔇';save()}
@@ -386,7 +441,7 @@ function startSpin(){phase='spin';const w=Math.floor(Math.random()*N),x=(w+.5+(M
 function endSpin(){phase='result';tEnd=Date.now()+4000;last=SEQ[spin.w];st.res.unshift(last);st.res=st.res.slice(0,12);
   const tot=total(),pay=r2(bets[last]*(last+1));
   if(tot>0){st.bal=r2(st.bal+pay);pushH('wheel',tot,pay,last+1,last);
-    msg(pay>0?t('win')+': +'+fmt(pay):t('loss')+': −'+fmt(tot),pay>0?'#6dffa3':'#ff9aa8');beep(pay>0?784:170,.25,pay>0?'sine':'triangle');try{tg&&tg.HapticFeedback.notificationOccurred(pay>0?'success':'error')}catch(e){}}
+    msg(pay>0?t('win')+': +'+fmt(pay):t('loss')+': −'+fmt(tot),pay>0?'#6dffa3':'#ff9aa8');if(onWheel())(pay>0?sfxWin:sfxLoss)();try{tg&&tg.HapticFeedback.notificationOccurred(pay>0?'success':'error')}catch(e){}}
   bets={1:0,3:0,5:0,10:0,20:0};st.pend=bets;render()}
 function newRound(){round++;phase='bet';tEnd=Date.now()+20000;msg('');render()}
 function draw(now){cx.clearRect(0,0,720,400);cx.save();cx.translate(360,380);cx.rotate(theta);cx.drawImage(face,-350,-350);cx.restore();cx.drawImage(over,0,0);
@@ -399,8 +454,8 @@ function localTick(now){
   else if(phase==='spin'){const p=Math.min((now-spin.t0)/spin.dur,1);theta=spin.from+(spin.to-spin.from)*(1-Math.pow(1-p,4));
     const i=Math.floor((((-theta%TAU)+TAU)%TAU)/A);if(i!==lastIdx){lastIdx=i;if(onWheel())beep(260+(i%5)*30,.025,'square')}if(p>=1)endSpin()}
   else if(phase==='result'&&now>=tEnd)newRound()}
-function frame(){try{const now=Date.now();if(SRV)srvTick(now);else localTick(now);stepBalls(now);
-  if(!document.hidden){if(GM==='wheel')draw(now);else if(GM==='plinko')drawP(now)}}catch(e){console.error(e)}finally{requestAnimationFrame(frame)}}
+function frame(){try{const now=Date.now();if(SRV)srvTick(now);else localTick(now);stepBalls(now);stepU(now);
+  if(!document.hidden){if(GM==='wheel')draw(now);else if(GM==='plinko')drawP(now);else if(GM==='upgrader')drawU()}}catch(e){console.error(e)}finally{requestAnimationFrame(frame)}}
 
 /* cashier */
 $('#plus').onclick=$('#topup').onclick=()=>{const box=document.createElement('div'),row=document.createElement('div');row.className='grid grid-cols-4 gap-2 my-3';
@@ -410,11 +465,19 @@ $('#plus').onclick=$('#topup').onclick=()=>{const box=document.createElement('di
   [100,250,500,1000].forEach(n=>{const b=document.createElement('button');b.textContent=n;b.onclick=()=>{inp.value=n;err.textContent='';mark()};row.append(b)});
   inp.oninput=()=>{err.textContent='';mark()};mark();box.append(P(t('sbp'),'font-semibold'),row,P(t('amount_ph'),'sub text-xs mb-1'),inp,err);
   modal(t('topup_t'),[box],[{text:t('cancel')},{text:t('confirm'),primary:true,fn:()=>{const v=r2(+inp.value);if(!(v>=1&&v<=100000)){err.textContent=t('bad_amount');return false}st.bal=r2(st.bal+v);st.dep+=v;render();beep(700,.15);hap('medium')}}])};
-$('#wd').onclick=()=>{let pick=50;const box=document.createElement('div'),row=document.createElement('div');row.className='grid grid-cols-3 gap-2 my-3';
-  [50,125,250,500,1250,2500].forEach(n=>{const b=document.createElement('button');b.className='gbtn py-3';b.textContent=n;b.disabled=n>st.bal;b.onclick=()=>{pick=n;[...row.children].forEach(x=>x.className='gbtn py-3');b.className='ybtn py-3'};row.append(b)});
-  const id=document.createElement('input');id.placeholder=t('wd_id');id.autocomplete='off';const e=P('','text-sm mt-2');box.append(row,id,e);
-  modal(t('wd_t2'),[box],[{text:t('cancel')},{text:t('confirm'),primary:true,fn:()=>{if(!id.value.trim()){e.textContent=t('wd_need');e.style.color='#ff9aa8';return false}
-    if(pick>st.bal){e.textContent=t('nofunds');e.style.color='#ff9aa8';return false}st.bal=r2(st.bal-pick);render();setTimeout(()=>modal(t('wd_t2'),[P(t('wd_ok'))],[{text:t('close'),primary:true}]),60)}}])};
+const WD_MIN=50,WD_MAX=100000;
+$('#wd').onclick=()=>{const box=document.createElement('div'),row=document.createElement('div');row.className='grid grid-cols-3 gap-2 my-3';
+  const am=document.createElement('input');am.type='number';am.inputMode='decimal';am.min=String(WD_MIN);am.max=String(WD_MAX);am.step='1';am.placeholder=t('amount_ph');am.setAttribute('aria-label',t('wd_amt'));am.className='text-center font-bold';
+  const id=document.createElement('input');id.placeholder=t('wd_id');id.autocomplete='off';id.maxLength=32;
+  const e=P('','text-sm mt-2');e.style.color='#ff9aa8';
+  const mark=()=>[...row.children].forEach(x=>x.className=+x.textContent===+am.value?'ybtn py-3':'gbtn py-3');
+  [50,125,250,500,1250,2500].forEach(n=>{const b=document.createElement('button');b.textContent=n;b.disabled=n>st.bal;b.onclick=()=>{am.value=n;e.textContent='';mark()};row.append(b)});
+  am.oninput=()=>{e.textContent='';mark()};mark();box.append(P(t('wd_amt'),'sub text-xs mb-1'),am,row,P(t('wd_id'),'sub text-xs mb-1 mt-3'),id,e);
+  modal(t('wd_t2'),[box],[{text:t('cancel')},{text:t('confirm'),primary:true,fn:()=>{const v=r2(+am.value);
+    if(!(v>=WD_MIN&&v<=WD_MAX)){e.textContent=t('wd_range').replace('{a}',WD_MIN).replace('{b}',WD_MAX);return false}
+    if(v>st.bal+1e-9){e.textContent=t('nofunds');return false}
+    if(!id.value.trim()){e.textContent=t('wd_need');return false}
+    st.bal=r2(st.bal-v);render();setTimeout(()=>modal(t('wd_t2'),[P(t('wd_ok'))],[{text:t('close'),primary:true}]),60)}}])};
 
 /* coupons */
 const COUPONS={WELCOME:{type:'general',amt:50,min:100},VIP1:{type:'personal',amt:150}};
@@ -430,7 +493,7 @@ $$('.doc').forEach(b=>b.onclick=()=>{const k=b.dataset.doc,box=document.createEl
   modal(b.textContent,[box],btns)});
 
 /* history helper, game switch */
-let GM='wheel';const onWheel=()=>curTab==='game'&&GM==='wheel';st.pres=st.pres||[];
+let GM='wheel';const onWheel=()=>curTab==='game'&&GM==='wheel',onUpg=()=>curTab==='game'&&GM==='upgrader';st.pres=st.pres||[];
 function pushH(k,bet,win,x,c){st.hist.unshift({k,r:round,c,bet,win:r2(win),x:+(+x).toFixed(2)});st.hist=st.hist.slice(0,40);save()}
 function showGame(g){GM=g;$$('[data-g]').forEach(e=>e.classList.toggle('hidden',e.dataset.g!==g));$$('[data-gx]').forEach(e=>e.classList.toggle('hidden',!e.dataset.gx.split(',').includes(g)));$$('.sg').forEach(b=>b.className='sg'+(b.dataset.gm===g?' on':''));msg('')}
 $$('.sg').forEach(b=>b.onclick=()=>{showGame(b.dataset.gm);beep(480,.04)});
@@ -501,7 +564,7 @@ function applyWheel(s){const now=Date.now();st.bal=s.balance;round=s.round;
   else if(s.phase==='spin'){if(!spin||spin.round!==s.round)startSpinTo(s.idx,Math.max(700,Math.min(6000,s.left*1000)),s.round)}
   else if(phase!=='spin'){phase='result';last=s.color;
     if(msgRound!==s.round){msgRound=s.round;const tot=total(),pay=r2((bets[last]||0)*(last+1));
-      if(tot>0){pushH('wheel',tot,pay,last+1,last);msg(pay>0?t('win')+': +'+fmt(pay):t('loss')+': −'+fmt(tot),pay>0?winCol:lossCol);beep(pay>0?784:170,.25,pay>0?'sine':'triangle');tgOk(pay>0)}}}
+      if(tot>0){pushH('wheel',tot,pay,last+1,last);msg(pay>0?t('win')+': +'+fmt(pay):t('loss')+': −'+fmt(tot),pay>0?winCol:lossCol);if(onWheel())(pay>0?sfxWin:sfxLoss)();tgOk(pay>0)}}}
   render()}
 function srvTick(now){
   if(phase==='spin'&&spin){const p=Math.min((now-spin.t0)/spin.dur,1);theta=spin.from+(spin.to-spin.from)*(1-Math.pow(1-p,4));
@@ -532,13 +595,55 @@ async function srvInit(){
 if(SRV){const infoPay=()=>modal(t('topup_t'),[P(t('srv_pay'))],[{text:t('close'),primary:true}]);
   $('#plus').onclick=$('#topup').onclick=$('#wd').onclick=infoPay;$('#clear').onclick=srvClear;$('#drop').onclick=srvDrop;$('#mMain').onclick=srvMinesMain;$('#apply').onclick=srvCoupon}
 
+/* ---------- апгрейдер ---------- */
+const UM=[1.5,2,3,5,10,20],uc=$('#uc'),ux=uc.getContext('2d'),uChance=m=>.97/m;let uMult=2,uAng=0,uAnim=null,uBusy=false;PD.u=0;
+UM.forEach(m=>{const b=document.createElement('button');b.dataset.m=m;b.textContent='×'+m;b.onclick=()=>{if(uAnim||uBusy)return;uMult=m;renderU();beep(480,.04)};$('#upMults').append(b)});
+function renderU(){$$('#upMults button').forEach(b=>b.className='gbtn py-2'+(+b.dataset.m===uMult?' ybtn':''));$('#upGo').disabled=!!(uAnim||uBusy)}
+function drawU(){const W=480,H=420,X=240,Y=215,R=150,c=uChance(uMult);ux.clearRect(0,0,W,H);
+  let g=ux.createRadialGradient(X,Y,R-24,X,Y,R+32);g.addColorStop(0,'#4a2c18');g.addColorStop(.5,'#84502f');g.addColorStop(1,'#2e1a0e');
+  ux.beginPath();ux.arc(X,Y,R+32,0,TAU);ux.moveTo(X+R-24,Y);ux.arc(X,Y,R-24,0,TAU,true);ux.fillStyle=g;ux.fill();
+  ux.strokeStyle='rgba(255,220,180,.38)';ux.lineWidth=2;for(let i=0;i<60;i++){const a=i*TAU/60,l=i%5?6:12;ux.beginPath();ux.moveTo(X+Math.cos(a)*(R+30),Y+Math.sin(a)*(R+30));ux.lineTo(X+Math.cos(a)*(R+30-l),Y+Math.sin(a)*(R+30-l));ux.stroke()}
+  ux.lineWidth=26;ux.strokeStyle='#3a0b10';ux.beginPath();ux.arc(X,Y,R-2,0,TAU);ux.stroke();
+  ux.save();ux.shadowColor='#3dff8a';ux.shadowBlur=18;ux.strokeStyle='#27d878';ux.beginPath();ux.arc(X,Y,R-2,-Math.PI/2,-Math.PI/2+c*TAU);ux.stroke();ux.restore();
+  ux.save();ux.translate(X,Y);ux.rotate(uAng);ux.shadowColor='rgba(0,0,0,.75)';ux.shadowBlur=10;ux.fillStyle='#ff3b30';ux.beginPath();ux.moveTo(0,-(R+26));ux.lineTo(-13,-(R-24));ux.lineTo(13,-(R-24));ux.closePath();ux.fill();ux.restore();
+  g=ux.createRadialGradient(X,Y-20,6,X,Y,86);g.addColorStop(0,'#8a4d2c');g.addColorStop(1,'#3b2014');ux.beginPath();ux.arc(X,Y,86,0,TAU);ux.fillStyle=g;ux.fill();ux.lineWidth=5;ux.strokeStyle='#26140a';ux.stroke();
+  ux.textAlign='center';ux.fillStyle='#fff';ux.shadowColor='rgba(0,0,0,.7)';ux.shadowBlur=8;ux.font='800 50px system-ui,Arial';ux.fillText('×'+uMult,X,Y+10);ux.shadowBlur=0;
+  ux.fillStyle='rgba(255,255,255,.8)';ux.font='600 15px system-ui,Arial';ux.fillText(t('up_chance')+' '+(c*100).toFixed(1)+'%',X,Y+40)}
+function startU(win,done){const c=uChance(uMult),a0=((uAng%TAU)+TAU)%TAU,tgt=win?(.1+Math.random()*.8)*c*TAU:(c+(.06+Math.random()*.88)*(1-c))*TAU;
+  uAnim={t0:Date.now(),dur:3400,from:uAng,to:uAng+((tgt-a0+TAU)%TAU)+TAU*5,done,li:-1};renderU()}
+function stepU(now){if(!uAnim)return;const p=Math.min((now-uAnim.t0)/uAnim.dur,1);uAng=uAnim.from+(uAnim.to-uAnim.from)*(1-Math.pow(1-p,4));
+  const i=Math.floor(uAng/(TAU/48));if(i!==uAnim.li){uAnim.li=i;if(onUpg())beep(300+(i%6)*25,.02,'square')}
+  if(p>=1){const d=uAnim.done;uAnim=null;renderU();d()}}
+function upDone(win,a,pay,balance){st.bal=balance!==undefined?balance:r2(st.bal+pay);PD.u=0;pushH('upgrader',a,pay,uMult);
+  msg(win?t('win')+': +'+fmt(pay-a):t('loss')+': −'+fmt(a),win?winCol:lossCol);if(onUpg())(win?sfxWin:sfxLoss)();tgOk(win);render()}
+$('#upGo').onclick=async()=>{if(uAnim||uBusy)return;const a=amt();if(a>st.bal+1e-9)return msg(t('nofunds'),lossCol);uBusy=true;renderU();
+  try{if(SRV){const m=uMult,r=await api('/api/upgrade',{bet:a,mult:m});st.bal=r2(st.bal-a);render();msg('');startU(r.win,()=>upDone(r.win,a,r.payout,r.balance))}
+    else{const win=Math.random()<uChance(uMult),pay=win?r2(a*uMult):0;st.bal=r2(st.bal-a);PD.u=a;render();msg('');startU(win,()=>upDone(win,a,pay))}}
+  catch(e){netErr(e)}finally{uBusy=false;renderU()}};
+
+/* ---------- возрастное подтверждение 18+ ---------- */
+const AGE_KEY='oxi_age18';
+function ageGate(){const g=$('#age'),lock=on=>['.wrap','#nav'].forEach(s=>{const e=$(s);if(e)e.inert=on});let ok=false;try{ok=localStorage.getItem(AGE_KEY)==='1'}catch(e){}
+  if(ok){g.classList.add('hidden');lock(false);return}
+  lock(true);g.classList.remove('hidden');
+  $('#ageYes').onclick=()=>{try{localStorage.setItem(AGE_KEY,'1')}catch(e){}g.classList.add('hidden');lock(false);beep(600,.08)};
+  $('#ageNo').onclick=()=>{$('#ageAsk').classList.add('hidden');$('#ageStop').classList.remove('hidden')};
+  $('#ageClose').onclick=()=>{try{tg&&tg.close()}catch(e){}}}
+
+/* ---------- профиль: бонусы и сотрудничество ---------- */
+$('#rowBonus').onclick=()=>modal(t('bonuses'),[P(t('bonus_t'),'leading-relaxed')],[{text:t('close')},{text:t('bonus_btn'),primary:true,fn:()=>{const e=$('#code');e.scrollIntoView({block:'center'});setTimeout(()=>e.focus({preventScroll:true}),200)}}]);
+$('#rowCoop').onclick=()=>{const box=document.createElement('div'),ul=document.createElement('ul'),m=P('','sub text-sm');box.append(P(t('coop_t'),'leading-relaxed'));ul.className='my-3';
+  ['coop_c1','coop_c2','coop_c3'].forEach(k=>{const li=document.createElement('li'),a=document.createElement('span'),b=document.createElement('span');li.className='py-2 flex gap-2';a.textContent='✓';a.style.color='#6dffa3';b.textContent=t(k);li.append(a,b);ul.append(li)});
+  linkify(m,t('coop_m'));box.append(ul,m);
+  modal(t('coop'),[box],[{text:t('close')},{text:t('coop_btn'),primary:true,fn:()=>{const u='https://t.me/oxidedrop_1';tg?tg.openTelegramLink(u):window.open(u,'_blank','noopener,noreferrer')}}])};
+
 /* language / sound / init */
 function applyLang(){document.documentElement.lang=lang;$$('[data-i18n]').forEach(e=>e.textContent=t(e.dataset.i18n));
-  $$('.lg').forEach(b=>{b.className='gbtn flex-1 py-2 lg'+(b.dataset.l===lang?' ybtn':'')});$('#uname').textContent=uname;render();renderBets();renderM();renderP()}
+  $$('.lg').forEach(b=>{b.className='gbtn flex-1 py-2 lg'+(b.dataset.l===lang?' ybtn':'')});$('#uname').textContent=uname;$('#avatar').textContent=([...uname][0]||'?').toUpperCase();render();renderBets();renderM();renderP();renderU()}
 $$('.lg').forEach(b=>b.onclick=()=>{lang=b.dataset.l;applyLang();beep(560,.04)});
 $('#sndBtn').onclick=()=>{sound=!sound;render();beep(560,.06)};
 let uname=t('guest');try{const u=tg.initDataUnsafe.user;if(u){uname=[u.first_name,u.last_name].filter(Boolean).join(' ');$('#uid').textContent='ID '+u.id}}catch(e){}
-showGame('wheel');applyLang();tab('game',1);requestAnimationFrame(frame);if(SRV)srvInit();
+showGame('wheel');applyLang();ageGate();tab('game',1);requestAnimationFrame(frame);if(SRV)srvInit();
 })();
 </script>
 </body>
